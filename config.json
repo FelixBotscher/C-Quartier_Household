@@ -1,0 +1,13 @@
+{
+	"db": {
+		"host": "127.0.0.1",
+		"user": "server",
+		"password": "server",
+		"dbname": "server"
+	},
+	"chain": {
+		"host": "localhost",
+		"encrypt": "RSA_WITH_AES_128_CBC",
+		"key_file": "keys"
+	}
+}
