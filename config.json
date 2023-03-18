@@ -9,5 +9,8 @@
 		"host": "localhost",
 		"encrypt": "RSA_WITH_AES_128_CBC",
 		"key_file": "keys"
+	},
+	"user": {
+		"uuid": 12345
 	}
 }

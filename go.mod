@@ -1,13 +1,11 @@
-module rfrank.eu/cpower
+module botscher.eu/cquartierhoushold
 
 go 1.17
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-playground/validator/v10 v10.10.1
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/uuid v1.3.0
-	github.com/gorilla/mux v1.8.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/robfig/cron/v3 v3.0.1
 	gitlab.db.in.tum.de/c-chain/ccf-go/ccf v0.0.0-20210315031022-5f2f02b324ce

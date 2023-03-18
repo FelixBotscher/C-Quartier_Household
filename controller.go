@@ -4,35 +4,33 @@ import (
 	"errors"
 	"fmt"
 	"github.com/robfig/cron/v3"
-	"os"
-	"time"
 )
 
 //Controller
 
 func main() {
-	c := cron.New()
-	var users = dbGetUsers()
-	argsWithProg := os.Args
-	if len(argsWithProg) == 2 {
-		if argsWithProg[1] == "--no-query" {
-			runWithoutQuery()
-			match()
-		}
-	} else {
-		runWithQuery(users, c)
-		matchContinuous(c)
-
-		// Start cron with scheduled jobs
-		fmt.Println("Start cron")
-		c.Start()
-		printCronEntries(c.Entries())
-
-		//Main thread sleeps forever
-		for {
-			time.Sleep(time.Duration(1<<63 - 1))
-		}
-	}
+	//c := cron.New()
+	//var users = dbGetUsers()
+	//argsWithProg := os.Args
+	//if len(argsWithProg) == 2 {
+	//	if argsWithProg[1] == "--no-query" {
+	//		runWithoutQuery()
+	//		match()
+	//	}
+	//} else {
+	//	runWithQuery(users, c)
+	//	matchContinuous(c)
+	//
+	//	// Start cron with scheduled jobs
+	//	fmt.Println("Start cron")
+	//	c.Start()
+	//	printCronEntries(c.Entries())
+	//
+	//	//Main thread sleeps forever
+	//	for {
+	//		time.Sleep(time.Duration(1<<63 - 1))
+	//	}
+	//}
 }
 
 func runWithoutQuery() (int, error) {

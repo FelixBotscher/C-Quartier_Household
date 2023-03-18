@@ -8,6 +8,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/jmoiron/sqlx"
 	"os"
+	"time"
 )
 
 type ConfigSQL struct {
@@ -15,6 +16,7 @@ type ConfigSQL struct {
 	User     string `json:"user"`
 	Password string `json:"password"`
 	DB       string `json:"dbname"`
+	UserId   string `json:"userId"`
 }
 
 func loadConfigSQL(file string) ConfigSQL {
@@ -171,6 +173,114 @@ func dbPutEMSPower(ap OpenEMSAPIResponse, user *User) error {
 	)
 	return err
 }
+
+// ------------------------------------New Implementations--------------------------------------
+// TODO SQL Implementation Codes
+func dbPutPowerdifferenceToChangesTable(val float64, uID string) error {
+	db := dbConnection()
+	defer db.Close()
+
+	_, err := db.Exec("INSERT INTO changes(userid,wchanges) values (UUID_TO_BIN(?, true),?);", uID, val)
+	return err
+}
+
+type Pow struct {
+	Time   time.Time `json:""`
+	userId string    `json:""`
+	w      int       `json:"value"`
+}
+
+type Usr struct {
+	Uuid      string         `db:"uuid" json:"uuid"`
+	Name      string         `db:"name" json:"name"`
+	PublicKey string         `db:"public_key" json:"public_key"`
+	Plz       int            `db:"plz" json:"plz"`
+	Email     string         `db:"email" json:"email"`
+	Password  string         `db:"password" json:"password"`
+	Iban      string         `db:"iban" json:"iban"`
+	Joindate  time.Time      `db:"joindate" json:"joindate"`
+	Chainid   string         `db:"chainid" json:"chainid"`
+	Active    int            `db:"active" json:"active"`
+	Url       sql.NullString `db:"url" json:"url"`
+}
+
+type SpecificUserInfo struct {
+	PostalCode         string    `db:"postalcode" json:"postalcode"`
+	City               string    `db:"city" json:"city"`
+	Address            string    `db:"address" json:"address"`
+	SolarPowerCapacity string    `db:"solarpowercapacity" json:"solarpowercapacity"`
+	PowerStorage       bool      `db:"powerstorage" json:"powerstorage"`
+	PsCapacity         float64   `db:"pscapcity" json:"pscapcity"`
+	Timestamp          time.Time `db:"timestamp" json:"timestamp"`
+	WAmount            float64   `db:"wamount" json:"wamount"`
+}
+
+// TODO Test implementation
+// This is used for the HTTP endpoint (access from central server)
+// alterntiver Name für die Funktion: dbGetStatusOfChangesTable
+func dbReadCurrentPowerOfChangesTable() Pow {
+	db := dbConnection()
+	var wData Pow
+
+	// Query
+	results, err := db.Query("SELECT time as t, BIN_TO_UUID(user, true) as uId, power as wPower FROM changes ORDER BY time DESC LIMIT 1;")
+	if err != nil {
+		return wData
+	}
+	defer results.Close()
+	defer db.Close()
+
+	//Results
+	err = results.Scan(&wData.Time, &wData.userId, &wData.w)
+	if err != nil {
+		return wData
+	}
+	return wData
+}
+
+func dbWriteDataToFeedingTable(val float64, usr *Usr, usrspec *SpecificUserInfo) error {
+	db := dbConnection()
+	defer db.Close()
+
+	_, err := db.Exec(
+		"INSERT INTO consumption(userid, postalcode,city, address, wamount) values (UUID_TO_BIN(?, true),?,?,?,?)",
+		usr.Uuid,
+		usr.Plz,
+		usrspec.City,
+		usrspec.Address,
+		val,
+	)
+	return err
+
+}
+
+func dbWriteDataToConsumingTable(value float64, usr *Usr, usrspec *SpecificUserInfo) error {
+	db := dbConnection()
+	defer db.Close()
+
+	_, err := db.Exec(
+		"INSERT INTO feeding(userid, postalcode, city, address, solarpowercapacity, powerstorage, pscapcity, wamount) values (UUID_TO_BIN(?, true),?,?,?,?,?,?,?)",
+		usr.Uuid,
+		usr.Plz,
+		usrspec.City,
+		usrspec.Address,
+		usrspec.SolarPowerCapacity,
+		usrspec.PowerStorage,
+		usrspec.PsCapacity,
+		value,
+	)
+	return err
+}
+
+func getWattOutOfVzLoggerData(ap vzloggerAPIResponse) (error, float64) {
+	err := validateStructure(ap)
+	if err != nil {
+		return err, 0.0
+	}
+	return nil, (ap.Data[1].Tuples[0][1])
+}
+
+//--------------------------------------------------------------------------------------------
 
 func dbPutSMPower(ap vzloggerAPIResponse, user *User) error {
 	err := validateStructure(ap)
