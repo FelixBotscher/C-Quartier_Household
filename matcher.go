@@ -61,7 +61,7 @@ func successfulMatch(matchset *Matchset, buyer *Buyer, seller *Seller) {
 	dbSetMatched(buyer.User, true)
 	dbSetMatched(seller.User, true)
 	buyer.User.Matched = 1
-	dbPutTransaction(Transaction{
+	dbPutTransaction(TransactionDebiricated{
 		uuid.New().String(),
 		seller.User.Uuid,
 		buyer.User.Uuid,

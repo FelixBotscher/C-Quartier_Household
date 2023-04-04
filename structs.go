@@ -3,8 +3,33 @@ package main
 import (
 	"database/sql"
 	"github.com/go-playground/validator/v10"
+	"gitlab.db.in.tum.de/c-chain/ccf-go/ccf"
 	"time"
 )
+
+//---------------- Structs for Chain handling ---------------------
+
+type TAM struct {
+	ccf       *ccf.Service
+	publicKey []byte
+	signKey   []byte
+	expires   time.Time
+}
+type Transaction struct {
+	Uuid   string    `json:"uuid"`
+	Time   time.Time `json:"time"`
+	Amount int       `json:"amount"`
+	//Price  int       `json:"price"`
+}
+
+//type TransactionF struct {
+//	Uuid   string    `json:"uuid"`
+//	Time   time.Time `json:"time"`
+//	Amount int       `json:"amount"`
+//	//Price  int       `json:"price"`
+//}
+
+//---------------- Structs for rest of the program ---------------------
 
 type Power struct {
 	Time    time.Time `json:""`
@@ -40,7 +65,7 @@ type User struct {
 	Url       sql.NullString `db:"url" json:"url"`
 }
 
-type Transaction struct {
+type TransactionDebiricated struct {
 	Uuid   string    `json:"uuid"`
 	Seller string    `json:"seller"`
 	Buyer  string    `json:"buyer"`

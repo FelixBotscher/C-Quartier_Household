@@ -3,22 +3,20 @@ CREATE DATABASE IF NOT EXISTS `server`;
 USE `server`;
 
 CREATE TABLE IF NOT EXISTS `consumption` (
-#                                              `id` BINARY(16) PRIMARY KEY,
-                                             `userid` BINARY(16) PRIMARY KEY,
+                                             `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP PRIMARY KEY,
+                                             `userid` BINARY(16),
                                              `postalcode` INT NOT NULL,
                                              `city` VARCHAR(255) NOT NULL,
                                              `address` VARCHAR(255) NOT NULL,
-                                             `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                             `wAmount` DEC NOT NULL
+                                             `wamount` DEC NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `feeding` (
-#                                          `id` BINARY(16) PRIMARY KEY,
-                                         `userid` BINARY(16) PRIMARY KEY,
+                                         `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP PRIMARY KEY,
+                                         `userid` BINARY(16),
                                          `postalcode` INT NOT NULL,
                                          `city` VARCHAR(255) NOT NULL,
                                          `address` VARCHAR(255) NOT NULL,
-                                         `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                          `solarpowercapacity` DEC NOT NULL,
                                          `powerstorage` BINARY(1) NOT NULL,
                                          `pscapacity` DEC NOT NULL,
@@ -31,56 +29,12 @@ CREATE TABLE IF NOT EXISTS `changes` (
                                          `wchange` DEC NOT NULL
 );
 
-ALTER TABLE `changes`
-    ADD FOREIGN KEY (`userid`)
-        REFERENCES `consumption` (`userid`),
-    ADD FOREIGN KEY (`userid`)
-        REFERENCES `feeding` (`userid`);
+# ALTER TABLE `changes`
+#     ADD FOREIGN KEY (`userid`)
+#         REFERENCES `consumption` (`userid`),
+#     ADD FOREIGN KEY (`userid`)
+#         REFERENCES `feeding` (`userid`);
 
-#
-# CREATE TABLE IF NOT EXISTS `users` (
-#                          `uuid` BINARY(16) PRIMARY KEY,
-#                          `name` VARCHAR(255) NOT NULL,
-#                          `seller` BOOL NOT NULL,
-#                          `public_key` TEXT NOT NULL,
-#                          `plz` INT NOT NULL,
-#                          `email` VARCHAR(255) NOT NULL,
-#                          `password` VARCHAR(255) NOT NULL,
-#                          `iban` VARCHAR(255) NOT NULL,
-#                          `joindate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-#                          `chainid` VARCHAR(255) NOT NULL,
-#                          `active` BOOL NOT NULL,
-#                          `minprice` INT NOT NULL,
-#                          `maxprice` INT NOT NULL,
-#                          `matched` BOOL NOT NULL,
-#                          `url` VARCHAR(255)
-# );
-#
-# CREATE TABLE IF NOT EXISTS `transactions` (
-#                                 `uuid` BINARY(16) PRIMARY KEY,
-#                                 `seller` BINARY(16) NOT NULL,
-#                                 `buyer` BINARY(16) NOT NULL,
-#                                 `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-#                                 `amount` INT NOT NULL,
-#                                 `price` INT NOT NULL
-# );
-#
-# CREATE TABLE IF NOT EXISTS `energy` (
-#                           `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-#                           `user` BINARY(16) NOT NULL,
-#                           `channel` VARCHAR(255) NOT NULL,
-#                           `wh` INT NOT NULL,
-#                           PRIMARY KEY (`time`, `user`, `channel`)
-# );
-#
-# CREATE TABLE IF NOT EXISTS `power` (
-#                          `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-#                          `user` BINARY(16) NOT NULL,
-#                          `channel` VARCHAR(255) NOT NULL,
-#                          `w` INT NOT NULL,
-#                          PRIMARY KEY (`time`, `user`, `channel`)
-# );
-#
 # ALTER TABLE `transactions` ADD FOREIGN KEY (`seller`) REFERENCES `users` (`uuid`);
 #
 # ALTER TABLE `transactions` ADD FOREIGN KEY (`buyer`) REFERENCES `users` (`uuid`);

@@ -97,7 +97,7 @@ type TAM struct {
 	expires   time.Time
 }
 
-type Transaction struct {
+type TransactionOld struct {
 	Uuid   string    `db:"uuid" json:"uuid"`
 	Seller string    `db:"seller" json:"seller"`
 	Buyer  string    `db:"buyer" json:"buyer"`
@@ -131,12 +131,12 @@ type ConfigSQL struct {
 	DB       string `json:"dbname"`
 }
 
-func dbGetTransactions() []Transaction {
+func dbGetTransactions() []TransactionOld {
 	config := loadConfigSQL("../config.json")
 	info := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true", config.User, config.Password, config.Host, 3306, config.DB)
 	db, err := sqlx.Connect("mysql", info)
 
-	var transactions []Transaction
+	var transactions []TransactionOld
 	err = db.Select(&transactions, "SELECT BIN_TO_UUID(uuid, true) as uuid, BIN_TO_UUID(uuid, true) as seller, BIN_TO_UUID(uuid, true) as buyer, time, amount, price FROM transactions;")
 	if err != nil {
 		return transactions

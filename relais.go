@@ -2,15 +2,20 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/stianeikeland/go-rpio"
+	"net/http"
 	"os"
 	"time"
 )
 
+// add more pins if needed here
+// take care of the GPIO <-> PIN mapping
 var (
-	pin = rpio.Pin(0)
+	pin = rpio.Pin(0) //Pin 27
 )
 
+// Just for testing this method
 func flashLight() {
 	//Open and map memory to access gpio, check for erros
 	if err := rpio.Open(); err != nil {
@@ -29,4 +34,39 @@ func flashLight() {
 		pin.Toggle()
 		time.Sleep(time.Second)
 	}
+}
+
+// Inits the pin
+func initPin() {
+	//Open and map memory to access gpio, check for errors
+	if err := rpio.Open(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	// Unmap gpio memory when done
+	defer rpio.Close()
+
+	// Set pin to output mode
+	pin.Output()
+	fmt.Println("Pins successfully initialized")
+}
+
+// Turns the gpio on or off according to the current @param currentRequest
+func updatePin(c *gin.Context) {
+	var temp bool
+
+	if err := c.Bind(&temp); err != nil {
+		fmt.Println("Failed to load the data into variable %b", temp)
+		return
+	}
+
+	if temp {
+		pin.High()
+		fmt.Println("Pin turned on")
+	} else {
+		pin.Low()
+		fmt.Println("Pin turned off")
+	}
+	c.IndentedJSON(http.StatusAccepted, temp)
 }
