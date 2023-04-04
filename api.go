@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -109,6 +110,44 @@ func getSM(user *User) (vzloggerAPIResponse, error) {
 	}
 	var responseObject vzloggerAPIResponse
 	json.Unmarshal(bodyBytes, &responseObject)
+	fmt.Printf("API Response as struct %+v\n", responseObject)
+	return responseObject, err
+}
+
+func getSMLocal() (vzloggerAPIResponse, error) {
+	fmt.Println("Calling Smart Meter")
+	client := &http.Client{}
+	//var url = "http://localhost:8081/" normal
+	var url = "http://localhost:8000/" //testing
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Content-Type", "application/json")
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Print(err.Error())
+		var responseObject vzloggerAPIResponse
+		return responseObject, err
+	} else {
+		if resp.StatusCode != 200 {
+			err = errors.New("Error: HTTP status code " + strconv.Itoa(resp.StatusCode))
+			var responseObject vzloggerAPIResponse
+			return responseObject, err
+		}
+	}
+	defer resp.Body.Close()
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+
+	var responseObject vzloggerAPIResponse
+	err = json.Unmarshal(bodyBytes, &responseObject)
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Printf("API Response as struct %+v\n", responseObject)
 	return responseObject, err
 }

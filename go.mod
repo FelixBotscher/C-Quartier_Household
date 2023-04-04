@@ -8,6 +8,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/stianeikeland/go-rpio v4.2.0+incompatible
 	gitlab.db.in.tum.de/c-chain/ccf-go/ccf v0.0.0-20210315031022-5f2f02b324ce
 )
 
