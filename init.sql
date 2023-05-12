@@ -3,30 +3,36 @@ CREATE DATABASE IF NOT EXISTS `server`;
 USE `server`;
 
 CREATE TABLE IF NOT EXISTS `consumption` (
-                                             `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP PRIMARY KEY,
-                                             `userid` BINARY(16),
-                                             `postalcode` INT NOT NULL,
+                                             `uuid` BINARY(16),
+                                             `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                             `userid` BINARY(16) NOT NULL,
+                                             `postalcode` VARCHAR(255) NOT NULL,
                                              `city` VARCHAR(255) NOT NULL,
                                              `address` VARCHAR(255) NOT NULL,
-                                             `wamount` DEC NOT NULL
+                                             `wamount` INT NOT NULL,
+                                             PRIMARY KEY (uuid, time)
 );
 
 CREATE TABLE IF NOT EXISTS `feeding` (
-                                         `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP PRIMARY KEY,
-                                         `userid` BINARY(16),
-                                         `postalcode` INT NOT NULL,
+                                         `uuid` BINARY(16),
+                                         `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                         `userid` BINARY(16) NOT NULL,
+                                         `postalcode` VARCHAR(255) NOT NULL,
                                          `city` VARCHAR(255) NOT NULL,
                                          `address` VARCHAR(255) NOT NULL,
-                                         `solarpowercapacity` DEC NOT NULL,
                                          `powerstorage` BINARY(1) NOT NULL,
                                          `pscapacity` DEC NOT NULL,
-                                         `wamount` DEC NOT NULL
+                                         `wamount` INT NOT NULL,
+                                         PRIMARY KEY (uuid, time)
 );
 
 CREATE TABLE IF NOT EXISTS `changes` (
-                                         `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP PRIMARY KEY,
+                                         `uuid` BINARY(16),
+                                         `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                          `userid` BINARY(16) NOT NULL,
-                                         `wchange` DEC NOT NULL
+                                         `absVal` INT NOT NULL,
+                                         `wChange` INT NOT NULL,
+                                         PRIMARY KEY (uuid, time)
 );
 
 # ALTER TABLE `changes`

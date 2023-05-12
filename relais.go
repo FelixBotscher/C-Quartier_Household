@@ -15,7 +15,7 @@ var (
 	pin = rpio.Pin(0) //Pin 27
 )
 
-// Just for testing this method
+// Just for testing
 func flashLight() {
 	//Open and map memory to access gpio, check for erros
 	if err := rpio.Open(); err != nil {
@@ -52,7 +52,25 @@ func initPin() {
 	fmt.Println("Pins successfully initialized")
 }
 
-// Turns the gpio on or off according to the current @param currentRequest
+func updatePinLocal(b bool) {
+	if b {
+		pin.High()
+		fmt.Println("Pin turned on")
+	} else {
+		pin.Low()
+		fmt.Println("Pin turned off")
+	}
+}
+
+func updatePinLocalDummy(b bool) {
+	if b {
+		fmt.Println("Pin turned on")
+	} else {
+		fmt.Println("Pin turned off")
+	}
+}
+
+// Turns the gpio on or off according to the current @param currentRequest (useage with api)
 func updatePin(c *gin.Context) {
 	var temp bool
 

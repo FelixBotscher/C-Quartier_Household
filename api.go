@@ -11,10 +11,14 @@ import (
 	"strconv"
 )
 
+//channels:
+//soc = state of charge -> "ess0/Soc"
+//active Power battery -> "ess0/ActivePower"
+
 func getEMS(user *User, channel string) (OpenEMSAPIResponse, error) {
-	fmt.Println("Calling OpenEMS for seller " + user.Name + " at channel " + channel)
+	fmt.Println("Calling OpenEMS at channel " + channel)
 	client := &http.Client{}
-	var url = user.Url.String + channel
+	var url = user.Url + channel
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Print(err.Error())
@@ -48,7 +52,7 @@ func getEMS(user *User, channel string) (OpenEMSAPIResponse, error) {
 func setEMS(user *User, channel string, value int) (OpenEMSAPIResponse, error) {
 	fmt.Println("Calling OpenEMS for seller " + user.Name + " at channel " + channel)
 	client := &http.Client{}
-	var url = user.Url.String + channel
+	var url = user.Url + channel
 	var jsonStr = `{"value": ` + strconv.Itoa(value) + `}`
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(jsonStr)))
 	if err != nil {
@@ -83,7 +87,7 @@ func setEMS(user *User, channel string, value int) (OpenEMSAPIResponse, error) {
 func getSM(user *User) (vzloggerAPIResponse, error) {
 	fmt.Println("Calling Smart Meter for buyer " + user.Name)
 	client := &http.Client{}
-	var url = user.Url.String
+	var url = user.Url
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Print(err.Error())
@@ -149,6 +153,6 @@ func getSMLocal() (vzloggerAPIResponse, error) {
 		fmt.Println(err)
 	}
 	//fmt.Printf("API Response as struct %+v\n", responseObject)
-	fmt.Println("API response value of struct %f", responseObject.Data[1].Tuples[0][1])
+	fmt.Println("API response value of struct %+v", responseObject.Data[1].Tuples[0][1])
 	return responseObject, err
 }

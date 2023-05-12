@@ -1,16 +1,42 @@
 {
-	"db": {
-		"host": "127.0.0.1",
-		"user": "server",
-		"password": "server",
-		"dbname": "server"
-	},
-	"chain": {
-		"host": "localhost",
-		"encrypt": "RSA_WITH_AES_128_CBC",
-		"key_file": "keys"
-	},
-	"user": {
-		"uuid": "249d442a-d5fc-4c65-bb43-7f21d7eecfd4"
-	}
+ "Db": {
+  "host": "127.0.0.1",
+  "user": "server",
+  "password": "server",
+  "dbname": "server"
+ },
+ "Chain": {
+  "host": "localhost",
+  "encrypt": "RSA_WITH_AES_128_CBC",
+  "key_file": "keys"
+ },
+ "User": {
+  "uuid": "249d442a-d5fc-4c65-bb43-7f21d7eecfd4",
+  "name": "Felix",
+  "seller": "false",
+  "public_key": "key",
+  "email": "felix.botscher@tum.de",
+  "password": "pwhash",
+  "iban": "DE45...",
+  "joindate": "2023-01-02T15:04:05Z",
+  "chainconsumpitonid": "723e3f33-0234-4415-98b6-7e13261ac129",
+  "chainfeedingid": "05b61125-8d5e-4085-b8ff-3ae48b744010",
+  "chainchangesid": "2f5fd695-c8cf-48f0-bae8-ff0dbdb49b30",
+  "active": 1,
+  "url": "https://127.0.0.1:8080/",
+  "postalcode": "80807",
+  "city": "München",
+  "address": "Max-Bill-Straße 67",
+  "powerstorage": false,
+  "pscapcity": 0
+ },
+ "Broker": {
+  "BaseAddress": "tcp://127.0.0.1:8080/",
+  "TargetChannel1": "cq/changes/",
+  "KeyChannel1": "Fxi0F2ib64pyiQFkbbR9STQ8pjxWWg2l",
+  "TargetChannel2": "cq/battery/",
+  "KeyChannel2": "KMjD4q5nOYNjzdBYTZKS66U_39BJcugF",
+  "TargetChannel3": "cq/actions/",
+  "KeyChannel3": "MiboseQsWrefC-7W67XvvmBF81y3IyQ3"
+ }
 }
