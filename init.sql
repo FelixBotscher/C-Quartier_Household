@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `feeding` (
                                          `city` VARCHAR(255) NOT NULL,
                                          `address` VARCHAR(255) NOT NULL,
                                          `powerstorage` BINARY(1) NOT NULL,
-                                         `pscapacity` DEC NOT NULL,
+                                         `pscapacity` FLOAT NOT NULL,
                                          `wamount` INT NOT NULL,
                                          PRIMARY KEY (uuid, time)
 );

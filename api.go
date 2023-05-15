@@ -45,7 +45,7 @@ func getEMS(user *User, channel string) (OpenEMSAPIResponse, error) {
 	}
 	var responseObject OpenEMSAPIResponse
 	json.Unmarshal(bodyBytes, &responseObject)
-	fmt.Printf("API Response as struct %+v\n", responseObject)
+	//fmt.Printf("API Response as struct %+v\n", responseObject)
 	return responseObject, err
 }
 

@@ -424,7 +424,7 @@ func writeDataToChangesChain(ct ChangesTransaction, user *User, tam *TAM) *apimo
 
 func filterActions(user *User) {
 	for _, val := range actions {
-		if val.uuid == user.Uuid {
+		if val.User == user.Uuid {
 			action = val
 			return
 		}

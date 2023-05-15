@@ -76,10 +76,12 @@ type Config struct {
 
 // end structs for conif.json handling------------------
 type Action struct {
-	uuid           string
-	LoadBattery    bool
-	DischargePower int
-	TurnOnRelay    bool
+	Time           time.Time `json:"time"`
+	Uuid           string    `json:"uuid"`
+	User           string    `json:"user"`
+	LoadBattery    bool      `json:"loadbattery"`
+	DischargePower int       `json:"dischargepower"`
+	TurnOnRelay    bool      `json:"turnonrelay"`
 }
 
 // for sending changes via emitter broker
