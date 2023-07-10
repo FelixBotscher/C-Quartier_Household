@@ -19,9 +19,9 @@
   "password": "pwhash",
   "iban": "DE45...",
   "joindate": "2023-01-02T15:04:05Z",
-  "chainconsumpitonid": "723e3f33-0234-4415-98b6-7e13261ac129",
-  "chainfeedingid": "05b61125-8d5e-4085-b8ff-3ae48b744010",
-  "chainchangesid": "2f5fd695-c8cf-48f0-bae8-ff0dbdb49b30",
+  "chainconsumpitonid": "6bd10e7d-4481-4671-bb3e-e85cd7c5db96",
+  "chainfeedingid": "ce5a5ffe-97f3-4cb6-95b8-132f3d8f7f31",
+  "chainchangesid": "bc50b158-8527-4c6f-9168-478acbb84092",
   "active": 1,
   "url": "https://127.0.0.1:8080/",
   "postalcode": "80807",
@@ -31,7 +31,7 @@
   "pscapcity": 0
  },
  "Broker": {
-  "BaseAddress": "tcp://127.0.0.1:8080/",
+  "BaseAddress": "tcp://0.0.0.0:8080/",
   "TargetChannel1": "cq/changes/",
   "KeyChannel1": "Fxi0F2ib64pyiQFkbbR9STQ8pjxWWg2l",
   "TargetChannel2": "cq/battery/",

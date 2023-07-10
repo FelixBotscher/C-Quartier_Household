@@ -446,7 +446,7 @@ func getConfig() Config {
 	config := Config{}
 	err = json.Unmarshal([]byte(f), &config)
 	if err != nil {
-		fmt.Println("Failed to load confi.json bytestream into struct of type Config")
+		fmt.Println("Failed to load config.json bytestream into struct of type Config")
 		panic(err)
 	}
 	return config
