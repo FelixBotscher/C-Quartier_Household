@@ -43,6 +43,7 @@ Host  | localhost:3306
 Database  |  server 
 User    |  server
 Password | server
+
 Create the first new Panel of Type TimeSeries and choose MySQL Data as Data Source and paste following JSON into the JSON Panel:
 ```
 {
