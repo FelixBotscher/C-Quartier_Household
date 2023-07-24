@@ -23,7 +23,7 @@ This is the codebase for installing the component on the Raspberry Pi of the Hou
 5. Add the data source MySQL Data with the Panels (see chapter #Grafana Configuration)
 6. Start VzLogger for turning on the IR-Reading head
 7. (Simulation: Start requestDummy.py with executing `uvicorn requestDummy:app --reload`, if fastapi is not installed run: `pip install fastapi`)
-8. Start in GoLand the configuration with the name "go build botscher.eu/cquartierhousehold"
+8. Start in GoLand the configuration with the name "go build botscher.eu/cquartierhousehold" or run `go run controller.go`
 # Project Structure
 - controller.go is the **MAIN** of C-Quarter_Households which is beeing executed and runs the inizialization bevor executing the **sheduled jobs**.
 - config.json keeps the configuartions which have to be modified.
